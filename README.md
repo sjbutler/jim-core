@@ -15,10 +15,10 @@ The API is currently minimalist and easy to use. For example:
     Jim library = new Jim();
     NameExtractor n = library.create();
     try {
-        FileData d = n.process( "FileName.java"));
+        FileData d = n.process( "FileName.java" );
 		...
-	}
-	catch (IOException e) { ... }
+    }
+    catch (IOException e) { ... }
 ```
 
 The ``FileData`` class provides the methods, one that returns the list of identifier names, one that returns a list of the tokens found in the names, and another that returns the set of tokens. Names retain the capitalisation used by the software developers and the tokens are normalised to lower case. 
