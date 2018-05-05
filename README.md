@@ -11,15 +11,15 @@ Binaries are released to Maven central, so Gradle users should add the following
 
 The API is currently minimalist and easy to use. For example:
 
-``  Jim library = new Jim();
-	NameExtractor n = library.create();
-	try {
-	    FileData d = n.process( 
-		    new RawFileData("FileName.java"), "FileName.java"));
+```  
+    Jim library = new Jim();
+    NameExtractor n = library.create();
+    try {
+        FileData d = n.process( "FileName.java"));
 		...
 	}
 	catch (IOException e) { ... }
-``
+```
 
 The ``FileData`` class provides the methods, one that returns the list of identifier names, one that returns a list of the tokens found in the names, and another that returns the set of tokens. Names retain the capitalisation used by the software developers and the tokens are normalised to lower case. 
 
@@ -29,7 +29,7 @@ The jim-core library requires Java 8 to run. It has not been tested with Java 9 
 
 jim-core uses ANTLR4 to parse Java and the Apache Commons Collections v4. Identifier name processing relies on intt and idtk-j. Logging relies on SLF4J. JUnit 4 and Hamcrest 1.3 are used for unit testing. The following illustrates the dependencies for Gradle.
 
-``   
+```   
     api 'org.slf4j:slf4j-api:1.7.25'
     api 'org.slf4j:slf4j-jdk14:1.7.25'
     compile 'org.antlr:antlr4-runtime:4.7.1'
@@ -39,7 +39,7 @@ jim-core uses ANTLR4 to parse Java and the Apache Commons Collections v4. Identi
     
     testImplementation 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
-``
+```
 
 ## Build
 A Gradle build script and a pom.xml are provided. For other build systems see the list of dependencies above. 
