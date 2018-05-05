@@ -278,6 +278,33 @@ public class JimCoreTests {
 	
     }
     
+     @Test
+    public void tryCatchTest() {
+	Jim library = new Jim();
+	NameExtractor n = library.create();
+	
+	try {
+	    FileData d = n.process( 
+		    new RawFileData("TryCatchTest.java"), 
+		    JimCoreTests.class.getResourceAsStream( 
+		    JAVA_TEST_FILE_FOLDER + "TryCatchTest.java"));
+	    assertThat("Did not find the resource declaration 'tryResource'", 
+		    d.names(), 
+		    hasItem("tryResource"));
+	    assertThat("Did not find the declared exception 'ex'", 
+		    d.names(), 
+		    hasItem("ex"));
+	    assertThat("Did not find the variable declared in finally block 'inFinally'", 
+		    d.names(), 
+		    hasItem("inFinally"));
+	}
+	catch (IOException e) {
+	    System.err.println( "unable to access test class TryCatchTest" );
+	}
+	
+    }
+    
+    
     @Test
     public void moreThanOneTopLevelClassTest() {
 	Jim library = new Jim();
