@@ -51,7 +51,7 @@ public class NameExtractor {
      * Parses the specified Java file to extract names. {@code FileData} object 
      * returned and the form of its contents are specified using the creator 
      * objects.
-     * @param fileName a file to parse
+     * @param fileName absolute path of the file to parse
      * @return a {@code RawFileData} object 
      * @throws FileNotFoundException thrown by ANTLR
      * @throws IOException thrown by ANTLR 
