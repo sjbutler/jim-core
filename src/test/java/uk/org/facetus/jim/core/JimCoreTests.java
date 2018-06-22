@@ -66,10 +66,10 @@ public class JimCoreTests {
 		    is(4));
 	    // the package name is 'none'
 	    assertThat(
-		    String.format( "Expected package name to be 'none'. "
+		    String.format( "Expected package name to be 'more.than.one.component'. "
 			    + "Instead found '%s'", d.packageName()), 
 		    d.packageName(), 
-		    is("none"));
+		    is("more.than.one.component"));
 	}
 	catch (IOException e) {
 	    System.err.println( "unable to access test class SimpleEmptyClassTest" );
@@ -339,6 +339,30 @@ public class JimCoreTests {
 	}
 	catch (IOException e) {
 	    System.err.println( "unable to access test class MoreThanOneTopLevelClass" );
+	}
+    }
+    
+    // The following is from 2018-03-31 ?!
+    // https://github.com/antlr/grammars-v4/issues/1097
+    // and affects the lexer parser pair at
+    // https://github.com/antlr/grammars-v4/tree/master/java
+    // It isn't/should not be a problem for the grammars used here, but is a canary
+    @Test
+    public void issue1097Test() {
+	Jim library = new Jim();
+	NameExtractor n = library.create();
+	
+	try {
+	    FileData d = n.process( 
+		    new RawFileData("AntlrIssue1097.java"), 
+		    JimCoreTests.class.getResourceAsStream( 
+		    JAVA_TEST_FILE_FOLDER + "AntlrIssue1097.java"));
+	    assertThat("Failed to recover class name: AntlrIssue1097", 
+		    d.names(), 
+		    hasItem("AntlrIssue1097"));
+	}
+	catch (IOException e) {
+	    System.err.println( "unable to access test class AntlrIssue1097" );
 	}
     }
 }

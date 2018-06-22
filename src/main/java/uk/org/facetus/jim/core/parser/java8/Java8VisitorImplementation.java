@@ -454,7 +454,7 @@ public class Java8VisitorImplementation extends Java8BaseVisitor<String> {
 	    //	:	Identifier
 	    //	|	packageName '.' Identifier
 	    //	;
-            this.dataBuilder.packageName( context.packageName().Identifier().getText() );
+            this.dataBuilder.packageName( context.packageName().getText() );
             
             return visitChildren(context); 
         }
