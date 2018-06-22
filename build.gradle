@@ -8,7 +8,6 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-// metadata for the pom
 group = "uk.org.facetus"
 archivesBaseName = "jim-core"
 version = "0.0.2"
@@ -23,8 +22,6 @@ repositories {
 dependencies {
     antlr 'org.antlr:antlr4:4.7.1'
     
-    api 'org.slf4j:slf4j-api:1.7.25'
-    api 'org.slf4j:slf4j-jdk14:1.7.25'
     compile 'org.antlr:antlr4-runtime:4.7.1'
     compile 'uk.org.facetus:idtk-j:0.5.2'
     compile 'uk.org.facetus:intt:0.8.1'

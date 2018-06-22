@@ -27,8 +27,6 @@ import java.util.ArrayList;
  *
  */
 public class FileDataBuilder {
-private static final Logger LOGGER
-            = LoggerFactory.getLogger(FileDataBuilder.class );
     private final RawFileData fileData;
     private final ArrayDeque<ProgramEntity> stack;
 

@@ -38,9 +38,6 @@ import uk.org.facetus.jim.core.parser.java8.Java8VisitorImplementation;
  */
 public class NameExtractor {
     
-    private static final Logger LOGGER = 
-	    LoggerFactory.getLogger( NameExtractor.class );
-    
     private final IdentifierNameTokeniser tokeniser;
     NameExtractor(IdentifierNameTokeniser tokeniser) {
 	this.tokeniser = tokeniser; 
@@ -58,18 +55,8 @@ public class NameExtractor {
      */
     public FileData process( String fileName) 
 	    throws FileNotFoundException, IOException {
-	try {
-	    RawFileData rawFileData = new RawFileData(fileName); 
-	    return process( rawFileData, new FileInputStream( fileName ) );
-	}
-	catch ( FileNotFoundException e) {
-	    LOGGER.error("File not found: \"{}\"\n{}", fileName, e);
-	    throw(e);
-	}
-	catch ( IOException e ) {
-	    LOGGER.error("IOException when reading: \"{}\"\n{}", fileName, e);
-	    throw(e);
-	}
+	RawFileData rawFileData = new RawFileData(fileName); 
+	return process( rawFileData, new FileInputStream( fileName ) );
     }
     
     FileData process( RawFileData data, InputStream is ) throws IOException {

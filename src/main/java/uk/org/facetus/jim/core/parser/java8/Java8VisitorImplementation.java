@@ -19,9 +19,6 @@ package uk.org.facetus.jim.core.parser.java8;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import org.antlr.v4.runtime.RuleContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.open.crc.idtk.Species;
 import uk.ac.open.crc.idtk.TypeName;
 import uk.org.facetus.jim.core.RawFileData;
@@ -42,9 +39,6 @@ public class Java8VisitorImplementation extends Java8BaseVisitor<String> {
     private static final String VOID = "void";
 
     private static final TypeName NO_TYPE = new TypeName( "#no type#" );
-
-    private static final Logger LOGGER
-            = LoggerFactory.getLogger( Java8VisitorImplementation.class );
 
     private static final int COLUMN_ADJUSTMENT = 1; // ANTLR counts from 0
 
