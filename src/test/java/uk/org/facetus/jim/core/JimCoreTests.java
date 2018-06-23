@@ -64,12 +64,18 @@ public class JimCoreTests {
 			    + "Found %d tokens, expected 4", d.tokens().size()), 
 		    d.tokens().size(), 
 		    is(4));
-	    // the package name is 'none'
+	    // the package name is 'more.than.one.component'
 	    assertThat(
 		    String.format( "Expected package name to be 'more.than.one.component'. "
 			    + "Instead found '%s'", d.packageName()), 
 		    d.packageName(), 
 		    is("more.than.one.component"));
+	    // and check the java name of the file is 'more.than.one.component.SimpleTestEmptyClass.java'
+	    assertThat(
+		    String.format( "Expected package name to be 'more.than.one.component.SimpleEmptyClassTest.java'. "
+			    + "Instead found '%s'", d.javaFileName()), 
+		    d.javaFileName(), 
+		    is("more.than.one.component.SimpleEmptyClassTest.java"));
 	}
 	catch (IOException e) {
 	    System.err.println( "unable to access test class SimpleEmptyClassTest" );

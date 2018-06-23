@@ -15,6 +15,7 @@
  */
 package uk.org.facetus.jim.core;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,7 @@ public class FileData {
     private final List<String> names;
     private final List<String> tokens; 
     
+    private final String systemPathToFile;
     private final String fileName;
     private final String packageName;
     
@@ -44,7 +46,14 @@ public class FileData {
 	this.tokeniser = tokeniser;
 	this.rawData = extractedData;
 	
-	this.fileName = this.rawData.fileName();
+	this.systemPathToFile = this.rawData.fileName();
+	int separatorIndex = this.systemPathToFile.lastIndexOf( File.separator );
+	if (separatorIndex != -1 ) {
+	    this.fileName = this.rawData.fileName().substring( separatorIndex );
+	}
+	else {
+	    this.fileName = this.systemPathToFile;
+	}
 	this.packageName = this.rawData.packageName();
 	this.rawData.topLevelEntities().forEach( pe -> getNames(pe) );
 	this.names.forEach( n -> getTokens(n));
@@ -64,6 +73,22 @@ public class FileData {
      */
     public String packageName() {
 	return this.packageName;
+    }
+    
+    /**
+     * The full Java file name {e.g.} {@code java.util.ArrayList.java}.
+     * @return the Java name of the file including the package
+     */
+    public String javaFileName() {
+	return this.packageName + "." + this.fileName;
+    }
+    
+    /**
+     * The path and name of the source code file on the file system. 
+     * @return the full path and file name used to access the source file
+     */
+    public String systemFileName() {
+	return this.systemPathToFile;
     }
     
     /**
