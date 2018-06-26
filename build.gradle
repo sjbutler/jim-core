@@ -10,7 +10,7 @@ apply plugin: 'signing'
 
 group = "uk.org.facetus"
 archivesBaseName = "jim-core"
-version = "0.0.2"
+version = "0.0.4"
 
 sourceCompatibility = 1.8
 
@@ -24,7 +24,7 @@ dependencies {
     
     compile 'org.antlr:antlr4-runtime:4.7.1'
     compile 'uk.org.facetus:idtk-j:0.5.2'
-    compile 'uk.org.facetus:intt:0.8.1'
+    compile 'uk.org.facetus:intt:0.8.3'
     compile 'org.apache.commons:commons-collections4:4.1'
     
     // Use JUnit test framework

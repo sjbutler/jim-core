@@ -49,14 +49,14 @@ public class FileData {
 	this.systemPathToFile = this.rawData.fileName();
 	int separatorIndex = this.systemPathToFile.lastIndexOf( File.separator );
 	if (separatorIndex != -1 ) {
-	    this.fileName = this.rawData.fileName().substring( separatorIndex );
+	    this.fileName = this.rawData.fileName().substring( separatorIndex - 1 );
 	}
 	else {
 	    this.fileName = this.systemPathToFile;
 	}
 	this.packageName = this.rawData.packageName();
 	this.rawData.topLevelEntities().forEach( pe -> getNames(pe) );
-	this.names.forEach( n -> getTokens(n));
+	this.names.forEach( n -> getTokens(n) );
     }
     
     /**

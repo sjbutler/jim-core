@@ -76,6 +76,12 @@ public class JimCoreTests {
 			    + "Instead found '%s'", d.javaFileName()), 
 		    d.javaFileName(), 
 		    is("more.than.one.component.SimpleEmptyClassTest.java"));
+	    // and check the name of the file is 'SimpleTestEmptyClass.java'
+	    assertThat(
+		    String.format( "Expected file name to be 'SimpleEmptyClassTest.java'. "
+			    + "Instead found '%s'", d.fileName()), 
+		    d.fileName(), 
+		    is("SimpleEmptyClassTest.java"));
 	}
 	catch (IOException e) {
 	    System.err.println( "unable to access test class SimpleEmptyClassTest" );
