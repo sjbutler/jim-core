@@ -49,7 +49,7 @@ public class FileData {
 	this.systemPathToFile = this.rawData.fileName();
 	int separatorIndex = this.systemPathToFile.lastIndexOf( File.separator );
 	if (separatorIndex != -1 ) {
-	    this.fileName = this.rawData.fileName().substring( separatorIndex - 1 );
+	    this.fileName = this.rawData.fileName().substring( separatorIndex + 1 );
 	}
 	else {
 	    this.fileName = this.systemPathToFile;

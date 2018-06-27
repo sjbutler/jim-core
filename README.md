@@ -7,7 +7,7 @@ jim-core is  currently being developed and is very much alpha software. It is er
 ## Usage
 Binaries are released to Maven central, so Gradle users should add the following line to their build file:
 
-  ``compile 'uk.org.facetus:jim-core:0.0.4'``
+  ``compile 'uk.org.facetus:jim-core:0.0.5'``
 
 The API is currently minimalist and easy to use. For example:
 
