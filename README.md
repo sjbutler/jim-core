@@ -7,7 +7,7 @@ jim-core is  currently being developed and is very much alpha software. It is er
 ## Usage
 Binaries are released to Maven central, so Gradle users should add the following line to their build file:
 
-  ``compile 'uk.org.facetus:jim-core:0.0.5'``
+  ``compile 'uk.org.facetus:jim-core:0.0.6'``
 
 The API is currently minimalist and easy to use. For example:
 
@@ -25,7 +25,7 @@ The ``FileData`` class provides the methods, one that returns the list of identi
 
 ## Requirements and Dependencies
 
-The jim-core library requires Java 8 to run. It has not been tested with Java 9 (yet). 
+The jim-core library requires Java 8 to run. It has not been fully tested with Java 9 (yet). 
 
 jim-core uses ANTLR4 to parse Java and the Apache Commons Collections v4. Identifier name processing relies on intt and idtk-j. JUnit 4 and Hamcrest 1.3 are used for unit testing. The following illustrates the dependencies for Gradle.
 
