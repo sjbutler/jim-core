@@ -7,7 +7,7 @@ jim-core is  currently being developed and is very much alpha software. It is er
 ## Usage
 Binaries are released to Maven central, so Gradle users should add the following line to their build file:
 
-  ``compile 'uk.org.facetus:jim-core:0.0.6'``
+  ``compile 'uk.org.facetus:jim-core:0.0.8'``
 
 The API is currently minimalist and easy to use. For example:
 
@@ -31,8 +31,8 @@ jim-core uses ANTLR4 to parse Java and the Apache Commons Collections v4. Identi
 
 ```   
     compile 'org.antlr:antlr4-runtime:4.7.1'
-    compile 'uk.org.facetus:idtk-j:0.5.2'
-    compile 'uk.org.facetus:intt:0.8.3'
+    compile 'uk.org.facetus:idtk-j:0.5.5'
+    compile 'uk.org.facetus:intt:0.8.7'
     compile 'org.apache.commons:commons-collections4:4.1'
     
     testImplementation 'junit:junit:4.12'
