@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.org.facetus</groupId>
     <artifactId>jim-core</artifactId>
-    <version>0.0.9</version>
+    <version>0.0.10</version>
     <name>jim-core</name>
     <description>The core functionality of a Java identifier miner (JIM).</description>
     <url>https://github.com/sjbutler/jim-core</url>
