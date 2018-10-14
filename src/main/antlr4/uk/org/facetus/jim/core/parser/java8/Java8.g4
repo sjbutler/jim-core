@@ -53,10 +53,6 @@ Total lexer+parser time 30844ms.
  */
 grammar Java8;
 
-//@header {
-//    package uk.org.facetus.jim.core.parser.java8;
-//}
-
 /*
  * Productions from §3 (Lexical Structure)
  */
@@ -73,11 +69,6 @@ literal
 /*
  * Productions from §4 (Types, Values, and Variables)
  */
-
-type
-	:	primitiveType
-	|	referenceType
-	;
 
 primitiveType
 	:	annotation* numericType

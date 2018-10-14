@@ -73,9 +73,9 @@ public class Java8VisitorImplementation extends Java8BaseVisitor<String> {
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code context}.</p>
 	 */
-	@Override public String visitType(Java8Parser.TypeContext context) { 
-            return visitChildren(context); 
-        }
+//	@Override public String visitType(Java8Parser.TypeContext context) { 
+//            return visitChildren(context); 
+//        }
         
 	/**
 	 * {@inheritDoc}
