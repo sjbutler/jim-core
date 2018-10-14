@@ -1,5 +1,5 @@
 # JIM Core
-jim-core provides the core functionality of a Java identifier name miner, a tool to extract identifier names from Java source code files for later analysis. jim-core currently processes Java code that conforms to Java 8. Java 9 processing is not yet implemented
+jim-core provides the core functionality of a Java identifier name miner, a tool to extract identifier names from Java source code files for later analysis. jim-core currently processes Java code that conforms to Java 8. Java 9/10/11 processing is not yet implemented
 
 ## Alpha
 jim-core is  currently being developed and is very much alpha software. It is error-prone and the API is subject to change, especially as functionality is added.
@@ -25,7 +25,7 @@ The ``FileData`` class provides the methods, one that returns the list of identi
 
 ## Requirements and Dependencies
 
-The jim-core library requires Java 8 to run. It has not been fully tested with Java 9 (yet). 
+The jim-core library requires Java 8 to run. It has not been fully tested with Java 9/10/11 (yet). 
 
 jim-core uses ANTLR4 to parse Java and the Apache Commons Collections v4. Identifier name processing relies on intt and idtk-j. JUnit 4 and Hamcrest 1.3 are used for unit testing. The following illustrates the dependencies for Gradle.
 
@@ -40,6 +40,6 @@ jim-core uses ANTLR4 to parse Java and the Apache Commons Collections v4. Identi
 ```
 
 ## Build
-A Gradle build script and a pom.xml are provided. For other build systems see the list of dependencies above. 
+A pom.xml is provided. For other build systems see the list of dependencies above. 
 
 

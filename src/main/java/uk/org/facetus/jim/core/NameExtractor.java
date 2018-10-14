@@ -24,8 +24,6 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.open.crc.intt.IdentifierNameTokeniser;
 import uk.org.facetus.jim.core.parser.java8.Java8Lexer;
 import uk.org.facetus.jim.core.parser.java8.Java8Parser;

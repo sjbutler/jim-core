@@ -16,8 +16,6 @@
 
 package uk.org.facetus.jim.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
