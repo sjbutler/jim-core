@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2018 Simon Butler
+    Copyright (C) 2018-2019 Simon Butler
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import uk.ac.open.crc.intt.IdentifierNameTokeniser;
+import uk.ac.open.crc.intt.TaggedToken;
 
 /**
  * A class containing the identifier name data extracted from a Java source 
@@ -31,6 +32,9 @@ import uk.ac.open.crc.intt.IdentifierNameTokeniser;
 public class FileData {
     private final List<String> names;
     private final List<String> tokens; 
+    private final TokenisationStrategy strategy;
+    
+    private final List<TokenisedName> tokenisedNames;
     
     private final String systemPathToFile;
     private final String fileName;
@@ -40,10 +44,12 @@ public class FileData {
     
     private final RawFileData rawData;
     
-    FileData(IdentifierNameTokeniser tokeniser, RawFileData extractedData) {
-	this.names = new ArrayList<>();
+    FileData(IdentifierNameTokeniser tokeniser, RawFileData extractedData, TokenisationStrategy strategy) {
+        this.names = new ArrayList<>();
 	this.tokens = new ArrayList<>();
+        this.tokenisedNames = new ArrayList<>();
 	this.tokeniser = tokeniser;
+        this.strategy = strategy;
 	this.rawData = extractedData;
 	
 	this.systemPathToFile = this.rawData.fileName();
@@ -56,7 +62,9 @@ public class FileData {
 	}
 	this.packageName = this.rawData.packageName();
 	this.rawData.topLevelEntities().forEach( pe -> getNames(pe) );
-	this.names.forEach( n -> getTokens(n) );
+        // tokens list populated by #getFullTokenisation
+	this.names.forEach( n -> tokeniseWithOrigins( n ) );
+//        this.names.forEach(n -> getFullTokenisation( n ) );
     }
     
     /**
@@ -100,6 +108,7 @@ public class FileData {
 	return this.names;
     }
     
+    
     /**
      * Recovers a list of the tokens found in identifier names declared
      * in the processed file.
@@ -107,6 +116,17 @@ public class FileData {
      */
     public List<String> tokens() {
 	return this.tokens;
+    }
+    
+    
+    /**
+     * Recovers a list of names of the identifier names declared in the 
+     * processed file and the tokens returned tokenisation
+     * with information about the origins of the tokens.
+     * @return a list of {@code TokenisedName} instances
+     */
+    public List<TokenisedName> tokenisedNames() {
+        return this.tokenisedNames;
     }
     
     /**
@@ -119,11 +139,30 @@ public class FileData {
     
     private void getNames(ProgramEntity entity) {
 	this.names.add( entity.identifierName());
-	entity.children().forEach( e -> getNames(e));
+	entity.children().forEach( e -> getNames(e) );
     }
     
-    private void getTokens(String name) {
-	this.tokeniser.tokenise( name)
+    private void tokenise( String name ) {
+	this.tokeniser.tokenise( name )
 		.forEach( t -> this.tokens.add( t.toLowerCase() ) );
     }
+        
+    private void tokeniseWithOrigins( String name ) {
+        List<TaggedToken> taggedTokens;
+        switch (this.strategy) {
+            case FULL:
+                taggedTokens = this.tokeniser.tokeniseWithOrigins( name );
+                break;
+                
+            case SIMPLE:
+                taggedTokens = this.tokeniser.naiveTokenisationWithOrigins( name );
+            break;
+            
+            default:
+                throw new IllegalStateException("Unrecognised tokenisation option!!");
+        }
+        this.tokenisedNames.add( new TokenisedName( name, taggedTokens ) );
+        taggedTokens.forEach( t -> this.tokens.add( t.getContent().toLowerCase() ) );
+    }
+        
 }

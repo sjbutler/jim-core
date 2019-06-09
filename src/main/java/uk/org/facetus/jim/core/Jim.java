@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2018 Simon Butler
+    Copyright (C) 2018-2019 Simon Butler
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package uk.org.facetus.jim.core;
 
 import uk.ac.open.crc.intt.IdentifierNameTokeniser;
 import uk.ac.open.crc.intt.IdentifierNameTokeniserFactory;
+import uk.ac.open.crc.intt.DictionaryConfiguration;
 
 /**
  * The class is the entry point to the library. First create an instance 
@@ -29,6 +30,7 @@ public class Jim {
 
     private final IdentifierNameTokeniserFactory inttFactory;
     private final IdentifierNameTokeniser intt;
+    private TokenisationStrategy strategy = TokenisationStrategy.FULL;
 
     /**
      * Creates an instance of {@code Jim} which can be used to create
@@ -39,12 +41,46 @@ public class Jim {
 	this.intt = this.inttFactory.create();
     }
     
+    
     /**
-     * Creates instances of {@code NameExtractor}.
+     * Creates an instance of {@code Jim} initialised with a specific 
+     * set of word lists which are used to create
+     * {@code NameExtractor} instances. 
+     * @param dc identifies a set of word lists to use with intt
+     */
+    public Jim( DictionaryConfiguration dc ) {
+        this.inttFactory = new IdentifierNameTokeniserFactory( dc );
+	this.intt = this.inttFactory.create();
+    }
+    
+    /**
+     * Selects a tokenisation strategy to use. FULL is the default.
+     * @param strategy a tokenisation strategy
+     */
+    public Jim( TokenisationStrategy strategy ) {
+        this();
+        this.strategy = strategy;
+    }
+    
+    /**
+     * Creates an instance of {@code Jim} initialised with a specific 
+     * set of word lists, which are used to create
+     * {@code NameExtractor} instances, and a tokenisation strategy to use. 
+     * @param dc identifies a set of word lists to use with intt
+     * @param strategy a tokenisation strategy for intt
+     */
+    public Jim( DictionaryConfiguration dc, TokenisationStrategy strategy ) {
+        this( dc );
+        this.strategy = strategy;
+    }
+    
+    
+    /**
+     * Creates instances of {@code NameExtractor} using the provided settings.
      * @return an instance of {@code NameExtractor} 
      */
     public NameExtractor create() {
-	return new NameExtractor(this.intt);
+	return new NameExtractor( this.intt, this.strategy );
     }
     
 }

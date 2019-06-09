@@ -41,7 +41,7 @@ public class JimCoreTests {
 		    new RawFileData("SimpleEmptyClassTest.java"), 
 		    JimCoreTests.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "SimpleTestEmptyClass.java"));
-	    assertThat("Expected to find only one identifier names", 
+	    assertThat("Expected to find only one identifier name", 
 		    d.names().size(), 
 		    is(1));
 	    assertThat("Failed to recover class name", 

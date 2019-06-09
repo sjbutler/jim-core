@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2017-2018 Simon Butler
+    Copyright (C) 2017-2019 Simon Butler
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -37,10 +37,12 @@ import uk.org.facetus.jim.core.parser.java8.Java8VisitorImplementation;
 public class NameExtractor {
     
     private final IdentifierNameTokeniser tokeniser;
-    NameExtractor(IdentifierNameTokeniser tokeniser) {
+    private final TokenisationStrategy strategy;
+
+    NameExtractor(IdentifierNameTokeniser tokeniser, TokenisationStrategy strategy) {
 	this.tokeniser = tokeniser; 
+        this.strategy = strategy;
     }
-    
     
     /**
      * Parses the specified Java file to extract names. {@code FileData} object 
@@ -51,7 +53,7 @@ public class NameExtractor {
      * @throws FileNotFoundException thrown by ANTLR
      * @throws IOException thrown by ANTLR 
      */
-    public FileData process( String fileName) 
+    public FileData process( String fileName ) 
 	    throws FileNotFoundException, IOException {
 	RawFileData rawFileData = new RawFileData(fileName); 
 	return process( rawFileData, new FileInputStream( fileName ) );
@@ -59,14 +61,14 @@ public class NameExtractor {
     
     FileData process( RawFileData data, InputStream is ) throws IOException {
 	CharStream input = CharStreams.fromStream( is);
-	Java8Lexer nominalLexer = new Java8Lexer( input );
-	CommonTokenStream tokens = new CommonTokenStream( nominalLexer );
+	Java8Lexer lexer = new Java8Lexer( input );
+	CommonTokenStream tokens = new CommonTokenStream( lexer );
 	Java8Parser java8Parser = new Java8Parser( tokens );
 	ParseTree parseTree = java8Parser.compilationUnit();  // grammar root.
 
 	Java8Visitor java8Visitor = 
 		new Java8VisitorImplementation( data );
 	java8Visitor.visit( parseTree );
-	return new FileData(this.tokeniser, data);
+	return new FileData( this.tokeniser, data, strategy );
     }
 }
