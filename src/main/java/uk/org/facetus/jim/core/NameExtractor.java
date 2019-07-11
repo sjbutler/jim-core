@@ -23,6 +23,10 @@ import java.io.InputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.DefaultErrorStrategy;
+import org.antlr.v4.runtime.InputMismatchException;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import uk.ac.open.crc.intt.IdentifierNameTokeniser;
 import uk.org.facetus.jim.core.parser.java8.Java8Lexer;
@@ -52,23 +56,84 @@ public class NameExtractor {
      * @return a {@code RawFileData} object 
      * @throws FileNotFoundException thrown by ANTLR
      * @throws IOException thrown by ANTLR 
+     * @throws JimParserException aggregates ANTLR lexer and parser exceptions
      */
     public FileData process( String fileName ) 
-	    throws FileNotFoundException, IOException {
+	    throws FileNotFoundException, IOException, JimParserException {
 	RawFileData rawFileData = new RawFileData(fileName); 
 	return process( rawFileData, new FileInputStream( fileName ) );
     }
     
-    FileData process( RawFileData data, InputStream is ) throws IOException {
-	CharStream input = CharStreams.fromStream( is);
-	Java8Lexer lexer = new Java8Lexer( input );
-	CommonTokenStream tokens = new CommonTokenStream( lexer );
-	Java8Parser java8Parser = new Java8Parser( tokens );
-	ParseTree parseTree = java8Parser.compilationUnit();  // grammar root.
+    FileData process( RawFileData data, InputStream is ) throws IOException, JimParserException {
+        try {
+            CharStream input = CharStreams.fromStream( is );
+            Java8Lexer lexer = new Java8Lexer( input );
+            CommonTokenStream tokens = new CommonTokenStream( lexer );
+            Java8Parser java8Parser = new Java8Parser( tokens );
+            java8Parser.removeErrorListeners();
+            java8Parser.setErrorHandler( new BailErrorStrategy() );
+            ParseTree parseTree = java8Parser.compilationUnit();  // grammar root.
 
-	Java8Visitor java8Visitor = 
-		new Java8VisitorImplementation( data );
-	java8Visitor.visit( parseTree );
-	return new FileData( this.tokeniser, data, strategy );
+            Java8Visitor java8Visitor = 
+                    new Java8VisitorImplementation( data );
+            java8Visitor.visit( parseTree );
+            return new FileData( this.tokeniser, data, strategy );
+        }
+        catch ( RuntimeException e ) {
+            Throwable cause = e.getCause();
+            if ( cause instanceof RecognitionException 
+                    || cause instanceof InputMismatchException ) {
+                throw new JimParserException( e );
+            }
+            else {
+                throw e ;
+            }
+        }
     }
+    
+    // Error strategy class for ANTLR see ANTLR 4 book pp172-3
+    // this forces ANTLR to bail out on a syntax error
+    // instead of trying to recover.
+    public class BailErrorStrategy extends DefaultErrorStrategy {
+        
+        // wrap and rethrow exception
+        @Override
+        public void recover( Parser recognizer, RecognitionException e ) {
+            throw new RuntimeException( e );
+        }
+        
+        // ensure that attempts are not made to recover inline
+        @Override
+        public org.antlr.v4.runtime.Token recoverInline( Parser recognizer ) throws RecognitionException {
+            throw new RuntimeException( new InputMismatchException( recognizer ));
+        }
+        
+        // prevents recovery from problems in subrules
+        @Override
+        public void sync( Parser recognizer ) {}
+    }
+    
+    
+    // error listener to ensure ANTLR errors are sent to log
+    // see ANTLR 4 book p154
+//    public class LogListener extends BaseErrorListener {
+//        @Override
+//        public void syntaxError( 
+//                Recognizer<?,?> recognizer, 
+//                Object offendingSymbol, 
+//                int line, 
+//                int charPositionInLine, 
+//                String msg, 
+//                RecognitionException e ) {
+//            List<String> stack = ((Parser) recognizer).getRuleInvocationStack();
+//            Collections.reverse( stack );
+//            LOGGER.warn( "In file: {}", javaFile);
+//            LOGGER.warn( "Rule stack: {}", stack);
+//            LOGGER.warn( 
+//                    "Line: {}\nSymbol: \"{}\"\nMessage: {}", 
+//                    line, offendingSymbol, msg );
+//        } 
+//   }
 }
+
+ 

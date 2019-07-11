@@ -20,13 +20,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import uk.ac.open.crc.intt.DictionaryConfiguration;
 
 /**
  * Tests to exercise jim-core with a German dictionary loaded for intt.
  * 
  */
-public class JimCoreGermanTests {
+public class JimCoreGermanTest {
     private static final String JAVA_TEST_FILE_FOLDER = "/testfiles/";
     @Test
     public void simpleEmptyClassTest() {
@@ -37,7 +38,7 @@ public class JimCoreGermanTests {
 	try {
 	    FileData d = n.process( 
 		    new RawFileData("EinfacherLeereKlasseTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "EinfacherLeereKlasseTest.java"));
 	    assertThat("Expected to find only one identifier name", 
 		    d.names().size(), 
@@ -82,7 +83,10 @@ public class JimCoreGermanTests {
 		    is("EinfacherLeereKlasseTest.java"));
 	}
 	catch (IOException e) {
-	    System.err.println( "unable to access test class EinfacherLeereKlasseTest" );
+	    fail( "unable to access test class EinfacherLeereKlasseTest" );
 	}
+        catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
     }
 }

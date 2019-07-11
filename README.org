@@ -8,7 +8,7 @@ jim-core is  currently being developed and is very much alpha software. It is er
 Binaries are released to Maven central, so Gradle users should add the following line to their build file:
 
 #+begin_src
-  compile 'uk.org.facetus:jim-core:0.0.10'
+  compile 'uk.org.facetus:jim-core:0.0.11'
 #+end_src
 
 The API is currently minimalist and easy to use. For example:
@@ -20,7 +20,9 @@ The API is currently minimalist and easy to use. For example:
         FileData d = n.process( "FileName.java" );
 		...
     }
+    catch (FileNotFoundException e) { ... }
     catch (IOException e) { ... }
+    catch (JimParserException e) { ... }
 #+end_src
 
 The ~FileData~ class provides methods to recover the names and tokens found in the processed file as well as tokenised names. Names retain the capitalisation used by the software developers and the tokens are normalised to lower case. Tokens may also be tagged with a list of the word lists in which they were found.

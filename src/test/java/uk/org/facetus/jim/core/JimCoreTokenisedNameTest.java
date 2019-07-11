@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.fail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -43,7 +44,7 @@ public class JimCoreTokenisedNameTest {
         try {
             FileData d = n.process( 
 		    new RawFileData("LocalVariableTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "LocalVariableTest.java"));
             
             List<TokenisedName> names = d.tokenisedNames();
@@ -85,7 +86,10 @@ public class JimCoreTokenisedNameTest {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class LocalVariableTest" );
 	}
-    }
+            catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+}
     
     
     @Test
@@ -94,7 +98,7 @@ public class JimCoreTokenisedNameTest {
         try {
             FileData d = n.process( 
 		    new RawFileData("LocalVariableTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "LocalVariableTest.java"));
             
             List<TokenisedName> names = d.tokenisedNames();
@@ -135,5 +139,8 @@ public class JimCoreTokenisedNameTest {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class LocalVariableTest" );
 	}
-    }
+           catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+     }
 }

@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.fail;
 import org.junit.Ignore;
 
 
@@ -28,7 +29,7 @@ import org.junit.Ignore;
  * Provides tests for simple Java 8 language structures. 
  * 
  */
-public class JimCoreTests {
+public class JimCoreTest {
     private static final String JAVA_TEST_FILE_FOLDER = "/testfiles/";
     @Test
     public void simpleEmptyClassTest() {
@@ -37,9 +38,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("SimpleEmptyClassTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("SimpleEmptyClassTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "SimpleTestEmptyClass.java"));
 	    assertThat("Expected to find only one identifier name", 
 		    d.names().size(), 
@@ -86,7 +86,10 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class SimpleEmptyClassTest" );
 	}
-    }
+         catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+   }
     
     @Test
     public void constructorAndMethodTest() {
@@ -94,9 +97,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("SimpleConstructorAndMethodTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("SimpleConstructorAndMethodTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "SimpleConstructorAndMethodTest.java"));
 	    assertThat("Did not find the method name 'aMethod'", 
 		    d.names(), 
@@ -123,7 +125,10 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class SimpleConstructorAndMethodTest" );
 	}
-    }
+          catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+  }
     
     
     
@@ -133,9 +138,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("LambdaPlain.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("LambdaPlain.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "LambdaPlain.java"));
 	    assertThat("Did not find the lambda parameter 'line'", 
 		    d.names(), 
@@ -147,7 +151,10 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class LambdaPlain" );
 	}
-    }
+          catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+  }
     
     @Ignore
     @Test
@@ -156,9 +163,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("AnnotationTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("AnnotationTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "AnnotationTest.java"));
 	    assertThat("Did not find the lambda parameter 'line'", 
 		    d.names(), 
@@ -170,6 +176,9 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class AnnotationTest" );
 	}
+        catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
 	
     }
     	
@@ -180,9 +189,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("EnumerationTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("EnumerationTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "EnumerationTest.java"));
 	    assertThat("Did not find the enumeration member 'ENUMERATION_MEMBER_ONE'", 
 		    d.names(), 
@@ -200,7 +208,10 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class EnumerationTest" );
 	}
-    }
+          catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+  }
     
     @Test
     public void interfaceTest() {
@@ -208,9 +219,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("InterfaceTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("InterfaceTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "InterfaceTest.java"));
 	    assertThat("Did not find the method 'anInterfaceMethod'", 
 		    d.names(), 
@@ -234,7 +244,10 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class InterfaceTest" );
 	}
-	
+	catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+
     }
     
     
@@ -244,9 +257,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("LocalVariableTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("LocalVariableTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "LocalVariableTest.java"));
 	    assertThat("Did not find the local variable parameter 'localString'", 
 		    d.names(), 
@@ -264,6 +276,9 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class LocalVariableTest" );
 	}
+        catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
 	
     }
     
@@ -273,9 +288,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("NestedClassTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("NestedClassTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "NestedClassTest.java"));
 	    assertThat("Did not find the nested class 'InnerClass'", 
 		    d.names(), 
@@ -287,6 +301,9 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class NestedClassTest" );
 	}
+        catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
 	
     }
     
@@ -296,9 +313,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("TryCatchTest.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("TryCatchTest.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "TryCatchTest.java"));
 	    assertThat("Did not find the resource declaration 'tryResource'", 
 		    d.names(), 
@@ -313,6 +329,9 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class TryCatchTest" );
 	}
+        catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
 	
     }
     
@@ -323,9 +342,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("MoreThanOneTopLevelClass.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("MoreThanOneTopLevelClass.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "MoreThanOneTopLevelClass.java"));
 	    assertThat(
 		    String.format("Expected 5 names, found '%d' instead.", 
@@ -352,7 +370,10 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class MoreThanOneTopLevelClass" );
 	}
-    }
+         catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+   }
     
     // The following is from 2018-03-31 ?!
     // https://github.com/antlr/grammars-v4/issues/1097
@@ -365,9 +386,8 @@ public class JimCoreTests {
 	NameExtractor n = library.create();
 	
 	try {
-	    FileData d = n.process( 
-		    new RawFileData("AntlrIssue1097.java"), 
-		    JimCoreTests.class.getResourceAsStream( 
+	    FileData d = n.process(new RawFileData("AntlrIssue1097.java"), 
+		    JimCoreTest.class.getResourceAsStream( 
 		    JAVA_TEST_FILE_FOLDER + "AntlrIssue1097.java"));
 	    assertThat("Failed to recover class name: AntlrIssue1097", 
 		    d.names(), 
@@ -376,5 +396,8 @@ public class JimCoreTests {
 	catch (IOException e) {
 	    System.err.println( "unable to access test class AntlrIssue1097" );
 	}
-    }
+           catch ( JimParserException e) {
+            fail( "Parser exception thrown" );
+        }
+ }
 }
