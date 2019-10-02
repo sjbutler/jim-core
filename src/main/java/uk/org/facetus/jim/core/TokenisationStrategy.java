@@ -19,7 +19,7 @@ package uk.org.facetus.jim.core;
  * Values that can be used to set the tokenisation strategy used by Jim. 
  * {@code FULL} runs the underlying name tokeniser in an aggressive setting 
  * where it tries to tokenise the name as best it can. {@code SIMPLE} selects 
- * a naive of conservative tokenisation where the tokenise uses only separators 
+ * a naive of conservative tokenisation where the tokeniser uses only separators 
  * and camel case (unambiguous boundaries) to tokenise names. The latter may 
  * be faster for most names, but relies on the assumption that names have a 
  * simple construction. 

@@ -20,11 +20,13 @@ import java.util.List;
 import uk.ac.open.crc.intt.TaggedToken;
 
 /**
- *
+ * Provides a representation of a token found in an identifier name consisting
+ * of the token identifier by the splitter and a list of 0..n wordlists in 
+ * which the token was found.
  */
 public class Token {
-    private String content;
-    private List<String> wordLists;
+    private final String content;
+    private final List<String> wordLists;
     
     Token(TaggedToken tt) {
         this.content = tt.getContent();
