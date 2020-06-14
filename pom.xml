@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.org.facetus</groupId>
     <artifactId>jim-core</artifactId>
-    <version>0.0.12-SNAPSHOT</version>
+    <version>0.0.12</version>
     <name>jim-core</name>
     <description>The core functionality of a Java identifier miner (JIM).</description>
     <url>https://github.com/sjbutler/jim-core</url>
@@ -77,7 +77,7 @@
 	<dependency>
 	    <groupId>org.antlr</groupId>
 	    <artifactId>antlr4</artifactId>
-	    <version>4.7.2</version>
+	    <version>4.8</version>
 	    <scope>compile</scope>
 	</dependency>
 	<dependency>
